@@ -30,7 +30,7 @@
        </div>
      </div>
 
-     <div class="text center mt-3">
+     <div class="text center mt-3" v-if="winMessage">
        <button 
        @click="reloadGame"
        class="btn btn-danger btn-block pl-5 pr-5">
