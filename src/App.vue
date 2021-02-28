@@ -30,6 +30,14 @@
        </div>
      </div>
 
+     <div class="text center mt-3">
+       <button 
+       @click="reloadGame"
+       class="btn btn-danger btn-block pl-5 pr-5">
+         Reset the Game
+       </button>
+     </div>
+
    </div>
  </main>
 </template>
@@ -45,7 +53,8 @@ export default{
     return{
       winMessage: '',
       isCross:true,
-      itemArray: new Array(9).fill("empty")
+      itemArray: new Array(9).fill("empty"),
+      unfilled: 9
     }
   },
   watch:{
@@ -68,6 +77,7 @@ export default{
         this.showDialog()
       }
       if(this.itemArray[itemNumber]==='empty'){
+        this.unfilled--;
         this.itemArray[itemNumber]=this.isCross?"cross":"circle";
         this.isCross=!this.isCross
       }
@@ -127,11 +137,15 @@ export default{
       ) {
         this.winMessage = `${this.itemArray[2]} won`;
       }
+      else if(!this.unfilled){
+        this.winMessage = "Match Drawn"
+      }
     },
     reloadGame(){
-      this.winMessage = " ";
+      this.winMessage = "";
       this.isCross =true;
-      this.itemArray = new Array(9).fill("empty")
+      this.itemArray = new Array(9).fill("empty");
+      this.unfilled = 9;
     }
   }
 }
