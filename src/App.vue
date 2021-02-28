@@ -1,5 +1,37 @@
 <template>
- <p> Hello </p>
+ <main class="d-flex flex-column justify-content-center align-items-center bg-dark">
+   <div class="container">
+     <div class="row justify-content-center mt-3">
+       <div class="col col-6 ">
+         <div class="text-center">
+           <div v-if="!winMessage">
+             <h1 class="text-info" v-show="isCross">
+               Cross Turn
+             </h1>
+             <h1 class="text-info" v-show="!isCross">
+               Circle Turn
+             </h1>
+           </div>
+           <div v-else>
+             <h1 class="text-warning">
+               {{winMessage.toUpperCase()}}
+             </h1>
+           </div>
+           <div class="grid">
+             <div v-for="(item,i) in itemArray"
+             :key="i"
+             @click="handleClick(i)"
+             class="card card-body box justify-content-center align-items-center bg-light">
+               <Icon :iconname="item"></Icon>
+             </div>
+
+           </div>
+         </div>
+       </div>
+     </div>
+
+   </div>
+ </main>
 </template>
 
 <script>
@@ -44,75 +76,57 @@ export default{
       }
       this.checkIsWinner()
     },
-    checkIsWinner(){
-      //checking winner of the game
-      if(this.itemArray[0]===this.itemArray[1] && 
-      this.itemArray[0]===this.itemArray[2] && 
-      this.itemArray[0]!="empty")
-      {
-        this.message=`${this.itemArray[0]} Won`
-
-
+    checkIsWinner() {
+      //  checking  winner of the game
+      if (
+        this.itemArray[0] === this.itemArray[1] &&
+        this.itemArray[0] === this.itemArray[2] &&
+        this.itemArray[0] !== "empty"
+      ) {
+        this.winMessage = `${this.itemArray[0]} won`;
+      } else if (
+        this.itemArray[3] !== "empty" &&
+        this.itemArray[3] === this.itemArray[4] &&
+        this.itemArray[4] === this.itemArray[5]
+      ) {
+        this.winMessage = `${this.itemArray[3]} won`;
+      } else if (
+        this.itemArray[6] !== "empty" &&
+        this.itemArray[6] === this.itemArray[7] &&
+        this.itemArray[7] === this.itemArray[8]
+      ) {
+        this.winMessage = `${this.itemArray[6]} won`;
+      } else if (
+        this.itemArray[0] !== "empty" &&
+        this.itemArray[0] === this.itemArray[3] &&
+        this.itemArray[3] === this.itemArray[6]
+      ) {
+        this.winMessage = `${this.itemArray[0]} won`;
+      } else if (
+        this.itemArray[1] !== "empty" &&
+        this.itemArray[1] === this.itemArray[4] &&
+        this.itemArray[4] === this.itemArray[7]
+      ) {
+        this.winMessage = `${this.itemArray[1]} won`;
+      } else if (
+        this.itemArray[2] !== "empty" &&
+        this.itemArray[2] === this.itemArray[5] &&
+        this.itemArray[5] === this.itemArray[8]
+      ) {
+        this.winMessage = `${this.itemArray[2]} won`;
+      } else if (
+        this.itemArray[0] !== "empty" &&
+        this.itemArray[0] === this.itemArray[4] &&
+        this.itemArray[4] === this.itemArray[8]
+      ) {
+        this.winMessage = `${this.itemArray[0]} won`;
+      } else if (
+        this.itemArray[2] !== "empty" &&
+        this.itemArray[2] === this.itemArray[4] &&
+        this.itemArray[4] === this.itemArray[6]
+      ) {
+        this.winMessage = `${this.itemArray[2]} won`;
       }
-      else if(this.itemArray[0]===this.itemArray[3] && 
-      this.itemArray[0]===this.itemArray[6] && 
-      this.itemArray[0]!="empty")
-      {
-        this.message=`${this.itemArray[0]} Won`
-
-
-      }
-      else if(this.itemArray[0]===this.itemArray[4] && 
-      this.itemArray[0]===this.itemArray[8] && 
-      this.itemArray[0]!="empty")
-      {
-        this.message=`${this.itemArray[0]} Won`
-
-
-      }
-      else if(this.itemArray[1]===this.itemArray[4] && 
-      this.itemArray[1]===this.itemArray[7] && 
-      this.itemArray[1]!="empty")
-      {
-        this.message=`${this.itemArray[1]} Won`
-
-
-      }
-      else if(this.itemArray[2]===this.itemArray[5] && 
-      this.itemArray[2]===this.itemArray[8] && 
-      this.itemArray[2]!="empty")
-      {
-        this.message=`${this.itemArray[2]} Won`
-
-
-      }
-      else if(this.itemArray[2]===this.itemArray[4] && 
-      this.itemArray[2]===this.itemArray[6] && 
-      this.itemArray[2]!="empty")
-      {
-        this.message=`${this.itemArray[2]} Won`
-
-
-      }
-      else if(this.itemArray[3]===this.itemArray[4] && 
-      this.itemArray[3]===this.itemArray[5] && 
-      this.itemArray[3]!="empty")
-      {
-        this.message=`${this.itemArray[3]} Won`
-
-
-      }
-      else if(this.itemArray[6]===this.itemArray[7] && 
-      this.itemArray[6]===this.itemArray[8] && 
-      this.itemArray[6]!="empty")
-      {
-        this.message=`${this.itemArray[6]} Won`
-
-
-      }
-      
-
-
     },
     reloadGame(){
       this.winMessage = " ";
