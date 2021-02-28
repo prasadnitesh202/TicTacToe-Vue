@@ -1,26 +1,139 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+ <p> Hello </p>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Icon from './components/icon.vue'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+export default{
+  name:'App',
+  components:{Icon},
+  data(){
+    return{
+      winMessage: '',
+      isCross:true,
+      itemArray: new Array(9).fill("empty")
+    }
+  },
+  watch:{
+    winMessage: function(message){
+      if(message){
+        this.showDialog();
+      }
+    }
+  },
+  methods:{
+    showDialog(){
+      Swal.fire({
+        icon:"info",
+        title:"GAME OVER",
+        text:`${this.winMessage}`
+      })
+    },
+    handleClick(itemNumber){
+      if(this.winMessage){
+        this.showDialog()
+      }
+      if(this.itemArray[itemNumber]==='empty'){
+        this.itemArray[itemNumber]=this.isCross?"cross":"circle";
+        this.isCross=!this.isCross
+      }
+      else{
+        return Swal.fire("Already Filled")
+      }
+      this.checkIsWinner()
+    },
+    checkIsWinner(){
+      //checking winner of the game
+      if(this.itemArray[0]===this.itemArray[1] && 
+      this.itemArray[0]===this.itemArray[2] && 
+      this.itemArray[0]!="empty")
+      {
+        this.message=`${this.itemArray[0]} Won`
+
+
+      }
+      else if(this.itemArray[0]===this.itemArray[3] && 
+      this.itemArray[0]===this.itemArray[6] && 
+      this.itemArray[0]!="empty")
+      {
+        this.message=`${this.itemArray[0]} Won`
+
+
+      }
+      else if(this.itemArray[0]===this.itemArray[4] && 
+      this.itemArray[0]===this.itemArray[8] && 
+      this.itemArray[0]!="empty")
+      {
+        this.message=`${this.itemArray[0]} Won`
+
+
+      }
+      else if(this.itemArray[1]===this.itemArray[4] && 
+      this.itemArray[1]===this.itemArray[7] && 
+      this.itemArray[1]!="empty")
+      {
+        this.message=`${this.itemArray[1]} Won`
+
+
+      }
+      else if(this.itemArray[2]===this.itemArray[5] && 
+      this.itemArray[2]===this.itemArray[8] && 
+      this.itemArray[2]!="empty")
+      {
+        this.message=`${this.itemArray[2]} Won`
+
+
+      }
+      else if(this.itemArray[2]===this.itemArray[4] && 
+      this.itemArray[2]===this.itemArray[6] && 
+      this.itemArray[2]!="empty")
+      {
+        this.message=`${this.itemArray[2]} Won`
+
+
+      }
+      else if(this.itemArray[3]===this.itemArray[4] && 
+      this.itemArray[3]===this.itemArray[5] && 
+      this.itemArray[3]!="empty")
+      {
+        this.message=`${this.itemArray[3]} Won`
+
+
+      }
+      else if(this.itemArray[6]===this.itemArray[7] && 
+      this.itemArray[6]===this.itemArray[8] && 
+      this.itemArray[6]!="empty")
+      {
+        this.message=`${this.itemArray[6]} Won`
+
+
+      }
+      
+
+
+    },
+    reloadGame(){
+      this.winMessage = " ";
+      this.isCross =true;
+      this.itemArray = new Array(9).fill("empty")
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+main {
+  height: 100vh;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.box {
+  height: 150px;
 }
 </style>
